@@ -1,0 +1,87 @@
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
+namespace api.Migrations
+{
+    /// <inheritdoc />
+    public partial class AddCommentAuthor : Migration
+    {
+        /// <inheritdoc />
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DeleteData(
+                table: "Stocks",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "Stocks",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "Stocks",
+                keyColumn: "Id",
+                keyValue: 3);
+
+            migrationBuilder.DeleteData(
+                table: "Stocks",
+                keyColumn: "Id",
+                keyValue: 4);
+
+            migrationBuilder.DeleteData(
+                table: "Stocks",
+                keyColumn: "Id",
+                keyValue: 5);
+
+            migrationBuilder.AddColumn<string>(
+                name: "AppUserId",
+                table: "Comments",
+                type: "nvarchar(450)",
+                nullable: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_AppUserId",
+                table: "Comments",
+                column: "AppUserId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Comments_AspNetUsers_AppUserId",
+                table: "Comments",
+                column: "AppUserId",
+                principalTable: "AspNetUsers",
+                principalColumn: "Id");
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Comments_AspNetUsers_AppUserId",
+                table: "Comments");
+
+            migrationBuilder.DropIndex(
+                name: "IX_Comments_AppUserId",
+                table: "Comments");
+
+            migrationBuilder.DropColumn(
+                name: "AppUserId",
+                table: "Comments");
+
+            migrationBuilder.InsertData(
+                table: "Stocks",
+                columns: new[] { "Id", "CompanyName", "Industry", "LastDiv", "MarketCap", "Purchase", "Symbol" },
+                values: new object[,]
+                {
+                    { 1, "Apple Inc.", "Consumer Electronics", 0.96m, 2800000000000L, 178.50m, "AAPL" },
+                    { 2, "NVIDIA Corporation", "Semiconductors", 0.16m, 2150000000000L, 875.40m, "NVDA" },
+                    { 3, "Intel Corporation", "Semiconductors", 0.50m, 132000000000L, 31.20m, "INTC" },
+                    { 4, "Fawry for Banking Technology and Electronic Payments", "Fintech", 0.00m, 28000000000L, 18.75m, "FWRY" },
+                    { 5, "Breadfast", "E-commerce & Delivery", 0.00m, 500000000L, 5.20m, "BRDF" }
+                });
+        }
+    }
+}
